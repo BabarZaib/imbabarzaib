@@ -610,7 +610,7 @@ var animateReveal = function() {
 
 	// gsap reveal
 	$('.gsap-reveal').each(function() {
-		$(this).append('<span class="cover"></span>');
+		//$(this).append('<span class="cover"></span>');
 	});
 	if ( greveal.length ) {
 		var revealNum = 0;

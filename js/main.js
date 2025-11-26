@@ -532,9 +532,9 @@ var jarallaxPlugin = function() {
 	});
 };
 
-var contactForm = function() {
-	if ($('#contactForm').length > 0 ) {
-		$( "#contactForm" ).validate( {
+var contactForm = function () {
+	if ($('#contactForm').length > 0) {
+		$("#contactForm").validate({
 			rules: {
 				name: "required",
 				email: {
@@ -554,43 +554,45 @@ var contactForm = function() {
 			errorElement: 'span',
 			errorLabelContainer: '.form-error',
 			/* submit via ajax */
-			submitHandler: function(form) {		
+			submitHandler: function (form) {
 				var $submit = $('.submitting'),
 					waitText = 'Submitting...';
 
-				$.ajax({   	
-			      type: "POST",
-			      url: "php/send-email.php",
-			      data: $(form).serialize(),
+				$submit.css('display', 'block').text(waitText);
 
-			      beforeSend: function() { 
-			      	$submit.css('display', 'block').text(waitText);
-			      },
-			      success: function(msg) {
-	               if (msg == 'OK') {
-	               	$('#form-message-warning').hide();
-			            setTimeout(function(){
-	               		$('#contactForm').fadeOut();
-	               	}, 1000);
-			            setTimeout(function(){
-			               $('#form-message-success').fadeIn();   
-	               	}, 1400);
-		               
-		            } else {
-		               $('#form-message-warning').html(msg);
-			            $('#form-message-warning').fadeIn();
-			            $submit.css('display', 'none');
-		            }
-			      },
-			      error: function() {
-			      	$('#form-message-warning').html("Something went wrong. Please try again.");
-			         $('#form-message-warning').fadeIn();
-			         $submit.css('display', 'none');
-			      }
-		      });    		
-	  		}
-			
-		} );
+				fetch(form.action, {
+					method: "POST",
+					body: new FormData(form),
+					headers: {
+						'Accept': 'application/json'
+					}
+				})
+					.then(response => {
+						if (response.ok) {
+							$('#form-message-warning').hide();
+							setTimeout(function () {
+								$('#contactForm').fadeOut();
+							}, 1000);
+							setTimeout(function () {
+								$('#form-message-success').fadeIn();
+							}, 1400);
+						} else {
+							response.json().then(data => {
+								$('#form-message-warning').html(data.error || "Something went wrong.");
+								$('#form-message-warning').fadeIn();
+								$submit.css('display', 'none');
+							});
+						}
+					})
+					.catch(error => {
+						$('#form-message-warning').html("Something went wrong. Please try again.");
+						$('#form-message-warning').fadeIn();
+						$submit.css('display', 'none');
+					});
+			}
+
+
+		});
 	}
 };
 

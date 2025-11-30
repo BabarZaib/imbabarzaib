@@ -941,9 +941,9 @@ a, a:hover {
 }
 
 .portfolio-item img {
-  -webkit-transition: .3s all ease;
-  -o-transition: .3s all ease;
-  transition: .3s all ease;
+  -webkit-transition: .1s all ease;
+  -o-transition: .1s all ease;
+  transition: .1s all ease;
   position: relative;
   -webkit-transform: scale(1);
   -ms-transform: scale(1);

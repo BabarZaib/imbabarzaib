@@ -2201,8 +2201,55 @@ span.error {
   }
 }
 
+/*
 .timeline-img {
-  width: 100%;
+  
+  width: 320px;          /* size of the square
+  height: 320px;
+   object-fit: cover;  
   border-radius: 10px;
   margin-top: 10px;
 }
+*/
+
+
+/* Ensure square image container */
+.timeline-img-box {
+  width: 100%;
+  max-width: 200px;       /* You can adjust */
+  aspect-ratio: 1 / 1;    /* Perfect square */
+  overflow: hidden;
+  border-radius: 10px;    /* Optional rounded corners */
+  margin-top: 15px;
+}
+
+/* Make image fill the square without distortion */
+.timeline-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;      /* Keeps proportions */
+  object-position: center;
+  display: block;
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+  .timeline-img-box {
+    max-width: 150px;
+  }
+}
+
+@media (max-width: 480px) {
+  .timeline-img-box {
+    max-width: 120px;
+  }
+}
+
+.timeline-item.left .timeline-img-box {
+  margin-left: auto;
+}
+
+.timeline-item.right .timeline-img-box {
+  margin-right: auto;
+}
+
